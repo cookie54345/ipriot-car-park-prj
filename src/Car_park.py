@@ -1,5 +1,5 @@
-from display import Display
-from sensor import Sensor
+from Display import Display
+from Sensor import Sensor
 
 
 class CarPark:
@@ -16,7 +16,7 @@ class CarPark:
         self.sensors = []
 
     def __str__(self):
-        return f"Car park at {self.location} has {self.capacity} bays available."
+        return f"Car park at {self.location} has {self.available_bays} bays available."
 
     def register(self, component):
         if not isinstance(component, (Sensor, Display)):
@@ -34,7 +34,9 @@ class CarPark:
     def remove_car(self, plate):
         if plate in self.plates:
             self.plates.remove(plate)
-        self.update_displays()
+            self.update_displays()
+        else:
+            raise ValueError(f"Plate '{plate}' not found in car park.")
 
     @property
     def available_bays(self):
