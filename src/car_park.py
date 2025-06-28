@@ -1,5 +1,5 @@
-from Display import Display
-from Sensor import Sensor
+from display import Display
+from sensor import Sensor
 
 
 class CarPark:

@@ -1,6 +1,6 @@
-from Car_park import CarPark
-from Display import Display
-from Sensor import EntrySensor, ExitSensor
+from car_park import CarPark
+from display import Display
+from sensor import EntrySensor, ExitSensor
 
 def main():
     # Initialize car park
