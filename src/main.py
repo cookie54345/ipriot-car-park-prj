@@ -1,43 +1,31 @@
 from car_park import CarPark
-from display import Display
 from sensor import EntrySensor, ExitSensor
+from display import Display
+from pathlib import Path
 
-def main():
-    # Initialize car park
-    car_park = CarPark(location="Downtown", capacity=5)
+# TODO: create a car park object with the location moondalup, capacity 100, and log_file "moondalup.txt"
+car_park = CarPark(location="moondalup", capacity=100, log_file=Path("moondalup.txt"))
 
-    # Create and register display
-    display = Display(display_id="D1", is_on=True)
-    car_park.register(display)
+# TODO: Write the car park configuration to a file called "moondalup_config.json"
+car_park.write_config(config_file="moondalup_config.json")
 
-    # Create and register sensors
-    entry_sensor = EntrySensor(sensor_id="E1", is_active=True, car_park=car_park)
-    exit_sensor = ExitSensor(sensor_id="X1", is_active=True, car_park=car_park)
-    car_park.register(entry_sensor)
-    car_park.register(exit_sensor)
+# TODO: Reinitialize the car park object from the "moondalup_config.json" file
+car_park = CarPark.from_config("moondalup_config.json")
 
-    print("Initial state:")
-    print(car_park)
-    print(display)
+# TODO: create an entry sensor object with id 1, is_active True, and car_park car_park
+entry_sensor = EntrySensor(sensor_id=1, is_active=True, car_park=car_park)
 
-    # Simulate vehicle entries
-    print("\nSimulating vehicle entries:")
-    for _ in range(3):
-        entry_sensor.detect_vehicle()
-        print(car_park)
-        print(display)
+# TODO: create an exit sensor object with id 2, is_active True, and car_park car_park
+exit_sensor = ExitSensor(sensor_id=2, is_active=True, car_park=car_park)
 
-    # Simulate vehicle exit
-    print("\nSimulating vehicle exit:")
-    exit_sensor.detect_vehicle()
-    print(car_park)
-    print(display)
+# TODO: create a display object with id 1, message "Welcome to Moondalup", is_on True, and car_park car_park
+display = Display(display_id=1, message="Welcome to Moondalup", is_on=True)
+car_park.register(display)
 
-    # Simulate another entry
-    print("\nSimulating another entry:")
+# TODO: drive 10 cars into the car park (must be triggered via the sensor - NOT by calling car_park.add_car directly)
+for i in range(1, 11):
     entry_sensor.detect_vehicle()
-    print(car_park)
-    print(display)
 
-if __name__ == "__main__":
-    main()
+# TODO: drive 2 cars out of the car park (must be triggered via the sensor - NOT by calling car_park.remove_car directly)
+for _ in range(2):
+    exit_sensor.detect_vehicle()
